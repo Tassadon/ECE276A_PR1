@@ -15,14 +15,14 @@ def rotplot(R,currentAxes=None):
 		[+ly, +ly, -ly, -ly, +ly, +ly, -ly, -ly],
 		[+lz, +lz, +lz, +lz, -lz, -lz, -lz, -lz]])
 
-	xp = np.dot(R,x);
+	xp = np.dot(R,x)
 	ifront = np.array([0, 2, 6, 4, 0])
 	iback = np.array([1, 3, 7, 5, 1])
 	itop = np.array([0, 1, 3, 2, 0])
 	ibottom = np.array([4, 5, 7, 6, 4])
 	
 	if currentAxes:
-		ax = currentAxes;
+		ax = currentAxes
 	else:
 		fig = plt.figure()
 		ax = plt.axes(projection="3d")
@@ -54,3 +54,5 @@ def example():
 	plt.show()
 
 
+if __name__ == "__main__":
+	example()
