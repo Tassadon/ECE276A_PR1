@@ -27,10 +27,11 @@ def next_quarternion(q,tau,omega):
 
 
 def q_norm(q):
-    return np.sqrt(q[0]**2 + np.dot(q+10**-6,q+10**-6))
+    return np.sqrt(q[0]**2 + np.dot(q+10**-8,q+10**-8))
 
 
 def q_multiply(q1,q2):
+
     qs = q1[0]*q2[0] - np.dot(q1[1:],q2[1:])
     the_cross = np.cross(q1[1:],q2[1:])
     qv = q1[0]*q2[1:] + q2[0]*q1[1:] + the_cross
@@ -53,7 +54,8 @@ def inverse(q):
 
 
 def get_a(q):
-    return q_multiply(q_multiply(inverse(q),np.array([0,0,0,-9.81])),q)
+    g = -9.81
+    return q_multiply(q_multiply(inverse(q),np.array([0,0,0,9.81])),q)
 
 def log(q):
     qv = q[1:]*np.arccos(q[0]/q_norm(q))/q_norm(q)

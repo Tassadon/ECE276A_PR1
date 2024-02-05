@@ -6,7 +6,7 @@ import transforms3d
 import optimization
 import quarternions
 
-def generate_and_save_optimization(dataset="1"):
+def generate_and_save_optimization(dataset="1",epochs=10,alpha=.003,testing=False):
     [camera,imu,Vicd] = load_data.load(fname="../../trainset",dataset=dataset)
     rots = []
     for i in range(Vicd['rots'].shape[2]):
@@ -49,5 +49,10 @@ def generate_and_save_optimization(dataset="1"):
 
     quarternions_T = quarternions.predict_next_quarternion(tau,Ang_Veloc)
     quarts = np.array(quarternions_T)
-    optimized_qts = optimization.optimize(quarts,Ang_Acc.T,tau[:,0],Ang_Veloc.T,alpha=.01)
+    optimized_qts = optimization.optimize(quarts,Ang_Acc.T,tau[:,0],Ang_Veloc.T,alpha=alpha,epochs=epochs)
     np.save("../numpy files/data_set_" + dataset + "_optimized_quarternions",optimized_qts)
+    np.save("../numpy files/data_set_" + dataset + "_raw_quarternions",quarternions_T)
+    np.save("../numpy files/data_set_" + dataset + "_vicon_data",rots)
+
+if __name__ == "__main__":
+    generate_and_save_optimization(dataset="1",epochs=10,alpha=.001)
