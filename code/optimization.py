@@ -3,6 +3,7 @@ from autograd import grad
 import quarternions
 from transforms3d import euler
 def myCostFunc(quarts,Acc,tau,omega):
+    
     for i,quart in enumerate(quarts):
         if i == 0:
             a = quarternions.get_a(quart)
@@ -56,6 +57,6 @@ if __name__ == "__main__":
     #print(acc.shape)
     #print(subu(joe,acc,tau,omega))
     #print(myCostFunc(joe,acc,tau,omega))
-    A = optimize(joe,acc,tau,omega,alpha=.001,epochs=100)
+    A = optimize(joe,acc,tau,omega,alpha=.01,epochs=100)
     print(A)
     #print(np.linalg.norm(A,axis=1))

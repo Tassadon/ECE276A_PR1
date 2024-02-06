@@ -7,12 +7,14 @@ import optimization
 import quarternions
 
 def generate_and_save_optimization(dataset="1",epochs=10,alpha=.003,testing=False):
-    [camera,imu,Vicd] = load_data.load(fname="../../trainset",dataset=dataset)
-    rots = []
-    for i in range(Vicd['rots'].shape[2]):
-        rots.append(list(transforms3d.euler.mat2euler(Vicd['rots'][:,:,i])))
 
-    rots = np.array(rots)
+    [camera,imu,Vicd] = load_data.load(fname="../../trainset",dataset=dataset,testing=testing)
+    rots = []
+    if not testing:
+        for i in range(Vicd['rots'].shape[2]):
+            rots.append(list(transforms3d.euler.mat2euler(Vicd['rots'][:,:,i])))
+
+        rots = np.array(rots)
     sc_ft_ang=3300/1023*(math.pi)/180/3.33
     sc_ft_acc=3300/1023/300
 
@@ -52,7 +54,8 @@ def generate_and_save_optimization(dataset="1",epochs=10,alpha=.003,testing=Fals
     optimized_qts = optimization.optimize(quarts,Ang_Acc.T,tau[:,0],Ang_Veloc.T,alpha=alpha,epochs=epochs)
     np.save("../numpy files/data_set_" + dataset + "_optimized_quarternions",optimized_qts)
     np.save("../numpy files/data_set_" + dataset + "_raw_quarternions",quarternions_T)
-    np.save("../numpy files/data_set_" + dataset + "_vicon_data",rots)
+    if not testing:
+        np.save("../numpy files/data_set_" + dataset + "_vicon_data",rots)
 
 if __name__ == "__main__":
     generate_and_save_optimization(dataset="1",epochs=10,alpha=.001)

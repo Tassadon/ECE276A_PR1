@@ -16,17 +16,22 @@ def read_data(fname):
       d = pickle.load(f, encoding='latin1')  # needed for python 3
   return d
 
-def load(fname=None,dataset="1",camera_data=False):
+def load(fname=None,dataset="1",camera_data=False,testing=False):
+  """
+  Returns: (cam,imud,vicd)
+  """
   if fname is not None:
     if camera_data:
       cfile = fname + "/cam/cam" + dataset + ".p"
     ifile = fname + "/imu/imuRaw" + dataset + ".p"
-    vfile = fname + "/vicon/viconRot" + dataset + ".p"
+    if not testing:
+      vfile = fname + "/vicon/viconRot" + dataset + ".p"
   else:
     if camera_data:
       cfile = "../data/cam/cam" + dataset + ".p"
     ifile = "../data/imu/imuRaw" + dataset + ".p"
-    vfile = "../data/vicon/viconRot" + dataset + ".p"
+    if not testing:
+      vfile = "../data/vicon/viconRot" + dataset + ".p"
 
   ts = tic()
   if camera_data:
@@ -34,7 +39,10 @@ def load(fname=None,dataset="1",camera_data=False):
   else:
     camd = None
   imud = read_data(ifile)
-  vicd = read_data(vfile)
+  if not testing:
+    vicd = read_data(vfile)
+  else:
+    vicd = None
   toc(ts,"Data import")
 
   return (camd,imud,vicd)

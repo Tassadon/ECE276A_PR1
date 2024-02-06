@@ -1,7 +1,6 @@
 import autograd.numpy as np
 from autograd import grad
 
-
 def predict_next_quarternion(tau,omega):
     assert omega.shape[0] == 3
     qt = np.zeros((omega.shape[1],4))
@@ -54,8 +53,8 @@ def inverse(q):
 
 
 def get_a(q):
-    g = -9.81
-    return q_multiply(q_multiply(inverse(q),np.array([0,0,0,9.81])),q)
+    g = -10
+    return q_multiply(q_multiply(inverse(q),np.array([0,0,0,-g])),q)
 
 def log(q):
     qv = q[1:]*np.arccos(q[0]/q_norm(q))/q_norm(q)
