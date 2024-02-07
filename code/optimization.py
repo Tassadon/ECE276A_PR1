@@ -2,6 +2,7 @@ import autograd.numpy as np
 from autograd import grad
 import quarternions
 from transforms3d import euler
+
 def myCostFunc(quarts,Acc,tau,omega):
     
     for i,quart in enumerate(quarts):

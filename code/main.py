@@ -58,4 +58,9 @@ def generate_and_save_optimization(dataset="1",epochs=10,alpha=.003,testing=Fals
         np.save("../numpy files/data_set_" + dataset + "_vicon_data",rots)
 
 if __name__ == "__main__":
-    generate_and_save_optimization(dataset="1",epochs=10,alpha=.001)
+    dataset_list=["1","2","3","4","5","6","7","8","9","10","11"]
+    for dataset in dataset_list:
+        if dataset == "10" or dataset == "11":
+            generate_and_save_optimization(dataset=dataset,epochs=10,alpha=.05,testing=False)
+        else:
+            generate_and_save_optimization(dataset=dataset,epochs=10,alpha=.05,testing=True)

@@ -45,4 +45,12 @@ def plot(dataset="1",path="../numpy files",testing=False):
     plt.show()
 
 if __name__ == "__main__":
-    plot(dataset="2")
+    dataset_given = False
+    while(not dataset_given):
+        dataset = input("Please enter the dataset you want to graph: ")
+        if dataset not in ["1","2","3","4","5","6","7","8","9","10","11"]:
+            print("please enter a valid dataset")
+        else:
+            dataset_given = True
+    
+    plot(dataset=dataset)

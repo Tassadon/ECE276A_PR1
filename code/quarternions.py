@@ -43,10 +43,8 @@ def exponential(q):
     qv = q[1:]*np.sin(q_norm(q[1:]))/q_norm(q[1:])
     return np.array([qs,qv[0],qv[1],qv[2]])*scalar
 
-
 def conjugate(q):
     return np.array([q[0],-q[1],-q[2],-q[3]])
-
 
 def inverse(q):
     return conjugate(q)/(np.square(q_norm(q)))
